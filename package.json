@@ -1,0 +1,95 @@
+{
+  "name": "electron-react-template",
+  "version": "1.0.0",
+  "description": "A template for building Electron apps with React.",
+  "main": "dist/bundle/main/index.js",
+  "scripts": {
+    "start": "concurrently --handle-input --default-input-target electron --kill-others npm:start:*",
+    "start:main": "parcel watch --no-cache --no-hmr --target main",
+    "start:preload": "parcel watch --no-cache --no-hmr --target preload",
+    "start:renderer": "parcel serve --no-cache --target renderer --port 5205",
+    "start:electron": "nodemon --watch dist/bundle/main --exec electron .",
+    "prebuild": "rimraf .parcel-cache dist",
+    "build": "concurrently npm:build:*",
+    "build:main": "parcel build --no-source-maps --target main",
+    "build:preload": "parcel build --no-source-maps --target preload",
+    "build:renderer": "parcel build --no-source-maps --target renderer",
+    "postbuild": "electron-builder build",
+    "lint": "tsc && eslint src --ext .ts,.tsx && prettier --check src",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaRealRomz/electron-react-template.git"
+  },
+  "keywords": [
+    "electron",
+    "react",
+    "template"
+  ],
+  "author": "DaRealRomz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DaRealRomz/electron-react-template/issues"
+  },
+  "homepage": "https://github.com/DaRealRomz/electron-react-template#readme",
+  "devDependencies": {
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "concurrently": "^8.2.2",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "eslint": "^8.55.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "nodemon": "^3.0.2",
+    "parcel": "^2.10.3",
+    "prettier": "^3.1.0",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  },
+  "prettier": {
+    "endOfLine": "auto"
+  },
+  "build": {
+    "productName": "Electron React Template",
+    "appId": "com.darealromz.ElectronReactTemplate",
+    "files": "dist/bundle",
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
+  "targets": {
+    "main": {
+      "context": "electron-main",
+      "source": "src/main/index.ts",
+      "distDir": "dist/bundle/main",
+      "isLibrary": true,
+      "optimize": true
+    },
+    "preload": {
+      "context": "electron-renderer",
+      "source": "src/main/preload.ts",
+      "distDir": "dist/bundle/main",
+      "isLibrary": true,
+      "optimize": true
+    },
+    "renderer": {
+      "context": "browser",
+      "source": "src/renderer/index.html",
+      "distDir": "dist/bundle/renderer",
+      "publicUrl": ".",
+      "isLibrary": false,
+      "optimize": true
+    }
+  }
+}

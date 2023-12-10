@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.reactLogo {
+  margin-left: auto;
+  width: 100px;
+  height: 100px;
+  animation: spin 15s linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.pingButton {
+  padding: 2px;
+  margin-right: 10px;
+}
